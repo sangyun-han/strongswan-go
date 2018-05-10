@@ -5,7 +5,7 @@ MAINTAINER Sangyun Han <sangyun628@gmail.com>
 RUN apt-get update
 
 RUN apt-get install strongswan -y
-RUN apt-get install strongswan-swanctl
+#RUN apt-get install strongswan-swanctl -y
 
 # project build setting
-git clone https://github.com/sangyun-han/strongswan-go
+#RUN git clone https://github.com/sangyun-han/strongswan-go
