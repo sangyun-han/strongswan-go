@@ -1,14 +1,13 @@
 package main
 
 import (
-
-    "github.com/bronze1man/goStrongswanVici"
     "fmt"
+    "github.com/sangyun-han/strongswan-go/vici"
 )
 
 func main() {
     fmt.Println("test")
-    client, err := goStrongswanVici.NewClientConnFromDefaultSocket()
+    client, err := vici.NewClientConnFromDefaultSocket()
     if err != nil {
         panic(err)
     }
