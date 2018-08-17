@@ -1,4 +1,4 @@
-package goStrongswanVici
+package vici
 
 import (
 	"crypto/ecdsa"

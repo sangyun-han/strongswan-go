@@ -1,4 +1,4 @@
-package goStrongswanVici
+package vici
 
 // Stats returns IKE daemon statistics and load information.
 func (c *ClientConn) Stats() (msg map[string]interface{}, err error) {

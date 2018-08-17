@@ -1,6 +1,6 @@
 // this file contains the functions for managing shared secrets
 
-package goStrongswanVici
+package vici
 
 import (
 	"fmt"

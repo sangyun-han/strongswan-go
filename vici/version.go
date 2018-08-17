@@ -1,4 +1,4 @@
-package goStrongswanVici
+package vici
 
 type Version struct {
 	Daemon  string `json:"daemon"`
