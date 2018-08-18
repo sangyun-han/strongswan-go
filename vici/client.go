@@ -4,7 +4,7 @@ import (
 	"net"
 )
 
-type ClientOptions struct {
+type ConnectionConfig struct {
 	Network string
 	Addr    string
 	// Dialer creates new network connection and has priority over
@@ -13,10 +13,10 @@ type ClientOptions struct {
 }
 
 type Client struct {
-	o ClientOptions
+	o ConnectionConfig
 }
 
-func NewClient(options ClientOptions) (client *Client) {
+func NewClient(options ConnectionConfig) (client *Client) {
 	if options.Dialer == nil {
 		options.Dialer = func() (net.Conn, error) {
 			return net.Dial(options.Network, options.Addr)
@@ -28,7 +28,7 @@ func NewClient(options ClientOptions) (client *Client) {
 }
 
 func NewClientFromDefaultSocket() (client *Client) {
-	return NewClient(ClientOptions{
+	return NewClient(ConnectionConfig{
 		Network: "unix",
 		Addr:    "/var/run/charon.vici",
 	})

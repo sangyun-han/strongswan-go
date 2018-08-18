@@ -9,7 +9,7 @@ import (
 type IkeSa struct {
 	Uniqueid        string               `json:"uniqueid"` //called ike_id in terminate() argument.
 	Version         string               `json:"version"`
-	State           string               `json:"state"` //had saw: ESTABLISHED
+	State           string               `json:"state"` // ESTABLISHED or CONNECTING
 	Local_host      string               `json:"local-host"`
 	Local_id        string               `json:"local-id"`
 	Remote_host     string               `json:"remote-host"`

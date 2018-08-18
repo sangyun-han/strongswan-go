@@ -41,7 +41,12 @@ func NewClientConn(conn net.Conn) (client *ClientConn) {
 	return client
 }
 
-// it dial from unix:///var/run/charon.vici
+/*
+strongSwan VICI configuration
+Key : charon.plugins.vici.socket
+Default : unix:///var/run/charon.vici
+Description : URI the plugin listens for client connections
+ */
 func NewClientConnFromDefaultSocket() (client *ClientConn, err error) {
 	conn, err := net.Dial("unix", "/var/run/charon.vici")
 	if err != nil {
