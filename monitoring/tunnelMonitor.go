@@ -21,6 +21,13 @@ func ExecuteTunnelMonitor() {
 	fmt.Println()
 	fmt.Println(string(result))
 	fmt.Println("End of test")
+	for key, value := range sasList {
+		fmt.Println("key=", key)
+		fmt.Println("value=", value)
+		fmt.Println()
+		fmt.Println()
+	}
+	fmt.Println("End of loop")
 }
 
 /*
