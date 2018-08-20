@@ -221,7 +221,7 @@ func handleChildRekey(eventName string, callback monitorCallBack, response map[s
 	callback(eventName, event)
 }
 
-func (c *ClientConn) MonitorSA(callback monitorCallBack,watchdog time.Duration) (err error) {
+func (c *ViciClient) MonitorSA(callback monitorCallBack,watchdog time.Duration) (err error) {
 	//register event
 	c.RegisterEvent(EVENT_CHILD_UPDOWN, func(response map[string]interface{}) {
 		//dumpResponse(response)

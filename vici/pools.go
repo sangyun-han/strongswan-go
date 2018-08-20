@@ -16,7 +16,7 @@ type PoolMapping struct {
 	InternalIPv6Prefix []string `json:"18,omitempty"`
 }
 
-func (c *ClientConn) LoadPool(ph Pool) error {
+func (c *ViciClient) LoadPool(ph Pool) error {
 	requestMap := map[string]interface{}{}
 
 	err := ConvertToGeneral(ph.PoolMapping, &requestMap)

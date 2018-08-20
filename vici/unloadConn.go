@@ -8,7 +8,7 @@ type UnloadConnRequest struct {
 	Name string `json:"name"`
 }
 
-func (c *ClientConn) UnloadConn(r *UnloadConnRequest) error {
+func (c *ViciClient) UnloadConn(r *UnloadConnRequest) error {
 	reqMap := &map[string]interface{}{}
 	ConvertToGeneral(r, reqMap)
 	msg, err := c.Request("unload-conn", *reqMap)

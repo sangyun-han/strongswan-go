@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func (c *ClientConn) ListConns(ike string) ([]map[string]IKEConf, error) {
+func (c *ViciClient) ListConns(ike string) ([]map[string]IKEConf, error) {
 	conns := []map[string]IKEConf{}
 	var eventErr error
 	var err error

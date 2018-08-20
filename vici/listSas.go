@@ -80,7 +80,7 @@ func (s *Child_sas) GetBytesOut() uint64 {
 // To be simple, list all clients that are connecting to this server .
 // A client is a sa.
 // Lists currently active IKE_SAs
-func (c *ClientConn) ListSas(ike string, ike_id string) (sas []map[string]IkeSa, err error) {
+func (c *ViciClient) ListSas(ike string, ike_id string) (sas []map[string]IkeSa, err error) {
 	sas = []map[string]IkeSa{}
 	var eventErr error
 	//register event
@@ -141,7 +141,7 @@ func (c *VpnConnInfo) GuessUserName() string {
 
 // a helper method to avoid complex data struct in ListSas
 // if it only have one child_sas ,it will put it into info.Child_sas
-func (c *ClientConn) ListAllVpnConnInfo() (list []VpnConnInfo, err error) {
+func (c *ViciClient) ListAllVpnConnInfo() (list []VpnConnInfo, err error) {
 	sasList, err := c.ListSas("", "")
 	if err != nil {
 		return

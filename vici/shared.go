@@ -22,7 +22,7 @@ type keyList struct {
 }
 
 // load a shared secret into the IKE daemon
-func (c *ClientConn) LoadShared(key *Key) error {
+func (c *ViciClient) LoadShared(key *Key) error {
 	requestMap := &map[string]interface{}{}
 
 	err := ConvertToGeneral(key, requestMap)
@@ -40,7 +40,7 @@ func (c *ClientConn) LoadShared(key *Key) error {
 }
 
 // unload (delete) a shared secret from the IKE daemon
-func (c *ClientConn) UnloadShared(key *UnloadKeyRequest) error {
+func (c *ViciClient) UnloadShared(key *UnloadKeyRequest) error {
 	requestMap := &map[string]interface{}{}
 
 	err := ConvertToGeneral(key, requestMap)
@@ -58,7 +58,7 @@ func (c *ClientConn) UnloadShared(key *UnloadKeyRequest) error {
 }
 
 // get a the names of the shared secrets currently loaded
-func (c *ClientConn) GetShared() ([]string, error) {
+func (c *ViciClient) GetShared() ([]string, error) {
 	msg, err := c.Request("get-shared", nil)
 	if err != nil {
 		fmt.Errorf("Error making request: %v", err)

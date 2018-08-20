@@ -15,7 +15,7 @@ type keyPayload struct {
 
 // LoadECDSAPrivateKey encodes a *ecdsa.PrivateKey as a PEM block before sending
 // it to the Vici interface
-func (c *ClientConn) LoadECDSAPrivateKey(key *ecdsa.PrivateKey) error {
+func (c *ViciClient) LoadECDSAPrivateKey(key *ecdsa.PrivateKey) error {
 	mk, err := x509.MarshalECPrivateKey(key)
 
 	if err != nil {
@@ -32,7 +32,7 @@ func (c *ClientConn) LoadECDSAPrivateKey(key *ecdsa.PrivateKey) error {
 
 // LoadRSAPrivateKey encodes a *rsa.PrivateKey as a PEM block before sending
 // it to the Vici interface
-func (c *ClientConn) LoadRSAPrivateKey(key *rsa.PrivateKey) error {
+func (c *ViciClient) LoadRSAPrivateKey(key *rsa.PrivateKey) error {
 	var mk = x509.MarshalPKCS1PrivateKey(key)
 
 	var pemData = pem.EncodeToMemory(&pem.Block{
@@ -45,7 +45,7 @@ func (c *ClientConn) LoadRSAPrivateKey(key *rsa.PrivateKey) error {
 
 // loadPrivateKey expects typ to be (RSA|ECDSA) and a PEM encoded data as a
 // string
-func (c *ClientConn) loadPrivateKey(typ, data string) (err error) {
+func (c *ViciClient) loadPrivateKey(typ, data string) (err error) {
 	requestMap := &map[string]interface{}{}
 
 	var k = keyPayload{

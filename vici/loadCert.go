@@ -10,7 +10,7 @@ type certPayload struct {
 	Data string `json:"data"`
 }
 
-func (c *ClientConn) LoadCertificate(s string, typ string, flag string) (err error) {
+func (c *ViciClient) LoadCertificate(s string, typ string, flag string) (err error) {
 	requestMap := &map[string]interface{}{}
 
 	var k = certPayload{

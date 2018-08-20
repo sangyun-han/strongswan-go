@@ -6,7 +6,7 @@ import (
 
 // Initiate is used to initiate an SA. This is the
 // equivalent of `swanctl --initiate -c childname`
-func (c *ClientConn) Initiate(child string, ike string) (err error) {
+func (c *ViciClient) Initiate(child string, ike string) (err error) {
 	inMap := map[string]interface{}{}
 	if child != "" {
 		inMap["child"] = child

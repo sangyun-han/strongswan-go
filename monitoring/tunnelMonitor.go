@@ -2,14 +2,17 @@ package monitoring
 
 import "github.com/sangyun-han/strongswan-go/vici"
 
-func startTunnelMonitor() {
+func executeTunnelMonitor() {
 	client, err := vici.NewClientConnFromDefaultSocket()
+	client2 := vici.NewClientFromDefaultSocket()
 	if err != nil {
 		panic(err)
 	}
 	defer client.Close()
 
 	// To be implemented
+	client.ListSas("df", "d")
+	client2.ListSas("1", "")
 }
 
 /*
