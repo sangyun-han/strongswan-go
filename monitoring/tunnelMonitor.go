@@ -3,6 +3,7 @@ package monitoring
 import (
 	"github.com/sangyun-han/strongswan-go/vici"
 	"fmt"
+	"encoding/json"
 )
 
 func ExecuteTunnelMonitor() {
@@ -14,7 +15,11 @@ func ExecuteTunnelMonitor() {
 
 	// To be implemented
 	sasList, err := client.ListSas("", "")
+	result, err := json.Marshal(sasList)
 	fmt.Println(sasList)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println(string(result))
 	fmt.Println("End of test")
 }
 
