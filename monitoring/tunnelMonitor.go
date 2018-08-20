@@ -26,6 +26,15 @@ func ExecuteTunnelMonitor() {
 		fmt.Println("value=", value)
 		fmt.Println()
 		fmt.Println()
+		fmt.Println(value["pdc"].Child_sas["pdc"].Bytes_in)
+		fmt.Println()
+		fmt.Println()
+		fmt.Println(value["tims"])
+		fmt.Println()
+		fmt.Println()
+		fmt.Println(value["pdc"].State)
+		fmt.Println()
+		fmt.Println()
 	}
 	fmt.Println("End of loop")
 }
