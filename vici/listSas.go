@@ -122,14 +122,14 @@ func (c *ViciClient) ListSas(ike string, ike_id string) (sas []map[string]IkeSa,
 }
 
 //a vpn conn in the strongswan server
-type VpnConnInfo struct {
+type IPsecTunnel struct {
 	IkeSa
 	Child_sas
 	IkeSaName   string //looks like conn name in ipsec.conf, content is same as ChildSaName
 	ChildSaName string //looks like conn name in ipsec.conf
 }
 
-func (c *VpnConnInfo) GuessUserName() string {
+func (c *IPsecTunnel) GuessUserName() string {
 	if c.Remote_xauth_id != "" {
 		return c.Remote_xauth_id
 	}
@@ -141,14 +141,14 @@ func (c *VpnConnInfo) GuessUserName() string {
 
 // a helper method to avoid complex data struct in ListSas
 // if it only have one child_sas ,it will put it into info.Child_sas
-func (c *ViciClient) ListAllVpnConnInfo() (list []VpnConnInfo, err error) {
+func (c *ViciClient) ListAllTunnelInfo() (list []IPsecTunnel, err error) {
 	sasList, err := c.ListSas("", "")
 	if err != nil {
 		return
 	}
-	list = make([]VpnConnInfo, len(sasList))
+	list = make([]IPsecTunnel, len(sasList))
 	for i, sa := range sasList {
-		info := VpnConnInfo{}
+		info := IPsecTunnel{}
 		if len(sa) != 1 {
 			fmt.Printf("[vici.ListAllVpnConnInfo] warning: len(sa)[%d]!=1\n", len(sa))
 		}
