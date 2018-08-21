@@ -2,14 +2,13 @@ package main
 
 import (
     "github.com/sangyun-han/strongswan-go/vici"
-    "fmt"
     "encoding/json"
-
-    "reflect"
+    "fmt"
 )
 
 type TunnelStats struct {
-    Id       string `json:"id"`
+    TunnelId string `json:"tunnel_id"`
+    SaId     string `json:"sa_id"`
     Version  string `json:"version"`
     Status   string `json:"status"`
     BytesIn  string `json:"bytes_in"`
@@ -30,33 +29,23 @@ func executeTunnelMonitor() {
 
     // To be implemented
     sasList, err := client.ListSas("", "")
-    result, err := json.Marshal(sasList)
-    fmt.Println(sasList)
-    fmt.Println()
-    fmt.Println()
-    fmt.Println(string(result))
-    fmt.Println("End of test")
-    for key, value := range sasList {
-        fmt.Println("key=", key)
-        fmt.Println("value=", value)
-        fmt.Println()
-        fmt.Println()
-        for k, v := range value {
-            fmt.Println(k, " : ", v)
-            fmt.Println(reflect.TypeOf(v))
+    var statsList []TunnelStats
+
+    for _, sa := range sasList {
+        for k, v := range sa {
+            stats := &TunnelStats{
+                TunnelId: k,
+                SaId: v.Uniqueid,
+                Version: v.Version,
+                Status: v.State,
+                BytesIn: v.Child_sas[k].Bytes_in,
+                BytesOut: v.Child_sas[k].Bytes_out,
+            }
+            statsList = append(statsList, *stats)
         }
-        //
-        //fmt.Println(value["pdc"].Child_sas["pdc"].Bytes_in)
-        //fmt.Println()
-        //fmt.Println()
-        //fmt.Println(value["tims"])
-        //fmt.Println()
-        //fmt.Println()
-        //fmt.Println(value["pdc"].State)
-        //fmt.Println()
-        //fmt.Println()
     }
-    fmt.Println("End of loop")
+    output, _ := json.Marshal(statsList)
+    fmt.Println(string(output))
 }
 
 /*
