@@ -63,7 +63,6 @@ type segment struct {
 	msg  map[string]interface{}
 }
 
-//msg 在内部以下列3种类型表示(降低复杂度)
 // string
 // map[string]interface{}
 // []string
@@ -90,7 +89,6 @@ func writeSegment(w io.Writer, msg segment) (err error) {
 		}
 	}
 
-	//写长度
 	err = binary.Write(w, binary.BigEndian, uint32(buf.Len()))
 	if err != nil {
 		fmt.Printf("[writeSegment] error writing to binary \n")
@@ -107,7 +105,6 @@ func writeSegment(w io.Writer, msg segment) (err error) {
 }
 
 func readSegment(inR io.Reader) (msg segment, err error) {
-	//长度
 	var length uint32
 	err = binary.Read(inR, binary.BigEndian, &length)
 	if err != nil {
@@ -117,7 +114,6 @@ func readSegment(inR io.Reader) (msg segment, err error) {
 		R: inR,
 		N: int64(length),
 	})
-	//类型
 	c, err := r.ReadByte()
 	if err != nil {
 		return
@@ -141,7 +137,6 @@ func readSegment(inR io.Reader) (msg segment, err error) {
 	return
 }
 
-//一个字节长度的字符串
 func writeString1(w *bytes.Buffer, s string) (err error) {
 	length := len(s)
 	if length > 255 {
@@ -165,7 +160,6 @@ func readString1(r *bufio.Reader) (s string, err error) {
 	return string(buf), nil
 }
 
-//两个字节长度的字符串
 func writeString2(w *bytes.Buffer, s string) (err error) {
 	length := len(s)
 	if length > 65535 {

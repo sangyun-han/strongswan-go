@@ -27,9 +27,13 @@ func executeTunnelMonitor() {
     }
     defer client.Close()
 
-    // To be implemented
     sasList, err := client.ListSas("", "")
     var statsList []TunnelStats
+
+    if len(sasList) == 0 {
+        fmt.Println("null")
+        return
+    }
 
     for _, sa := range sasList {
         for k, v := range sa {
@@ -48,7 +52,7 @@ func executeTunnelMonitor() {
     fmt.Println(string(output))
 }
 
-/*
-- IPsec tunnel monitor as a daemon mode
-- IPsec tunnel monitor as a passive mode
- */
+// daemon mode monitor
+func runMonitoringDaemon() {
+    // To be implemented
+}
