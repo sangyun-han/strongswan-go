@@ -2,8 +2,9 @@ package main
 
 import (
     "github.com/sangyun-han/strongswan-go/vici"
-    "encoding/json"
+    "os"
     "fmt"
+    "encoding/json"
 )
 
 type TunnelStats struct {
@@ -16,11 +17,20 @@ type TunnelStats struct {
 }
 
 func main() {
-    executeTunnelMonitor()
+    if len(os.Args) < 2 {
+        statsList := executeTunnelMonitor()
+        if statsList == nil {
+            fmt.Println("null")
+        }
+        output, _ := json.Marshal(statsList)
+        fmt.Println(string(output))
+    } else {
+        runMonitoringDaemon()
+    }
 }
 
 // passive mode monitor
-func executeTunnelMonitor() {
+func executeTunnelMonitor() []TunnelStats {
     client, err := vici.NewViciClientFromDefaultSocket()
     if err != nil {
         panic(err)
@@ -31,8 +41,7 @@ func executeTunnelMonitor() {
     var statsList []TunnelStats
 
     if len(sasList) == 0 {
-        fmt.Println("null")
-        return
+        return nil
     }
 
     for _, sa := range sasList {
@@ -48,11 +57,44 @@ func executeTunnelMonitor() {
             statsList = append(statsList, *stats)
         }
     }
-    output, _ := json.Marshal(statsList)
-    fmt.Println(string(output))
+
+    return statsList
 }
 
 // daemon mode monitor
 func runMonitoringDaemon() {
-    // To be implemented
+    client, err := vici.NewViciClientFromDefaultSocket()
+    if err != nil {
+        panic(err)
+    }
+    defer client.Close()
+
+    go func() {
+        sasList, err := client.ListSas("", "")
+        if err != nil {
+            fmt.Println(err)
+        }
+        if len(sasList) == 0 {
+            fmt.Println("null")
+        }
+
+        var statsList []TunnelStats
+
+        // TODO add waitgroup(lazy withdraw)
+        for _, sa := range sasList {
+            for k, v := range sa {
+                stats := &TunnelStats{
+                    TunnelId: k,
+                    SaId: v.Uniqueid,
+                    Version: v.Version,
+                    Status: v.State,
+                    BytesIn: v.Child_sas[k].Bytes_in,
+                    BytesOut: v.Child_sas[k].Bytes_out,
+                }
+                statsList = append(statsList, *stats)
+            }
+        }
+        output, _ := json.Marshal(statsList)
+        fmt.Println(string(output))
+    }()
 }
